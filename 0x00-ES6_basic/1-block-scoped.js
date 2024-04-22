@@ -3,6 +3,8 @@ export default function taskBlock(trueOrFalse) {
   const task2 = true;
 
   if (trueOrFalse) {
+    /* eslint-disable no-unused-vars : "error"*/
+
     const task = true;
     const task2 = false;
   }
