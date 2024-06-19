@@ -4,24 +4,24 @@ const readDatabase = (path) => new Promise((resolve, reject) => {
   fs.readFile(path, 'utf8', (err, data) => {
     if (err) reject(Error('Cannot load the database'));
     else {
-      const store = {};
-      const nbr_lines = data.split('\n');
+      const hashtable = {};
       let students = -1;
-      for (const line of nbr_lines) {
+      const lines = data.split('\n');
+      for (const line of lines) {
         if (line.trim() !== '') {
-          const cols = line.split(',');
-          const field = cols[3];
-          const firstName = cols[0];
+          const columns = line.split(',');
+          const field = columns[3];
+          const firstname = columns[0];
           if (students >= 0) {
-            if (!Object.hasOwnProperty.call(store, field)) {
-              store[field] = [];
+            if (!Object.hasOwnProperty.call(hashtable, field)) {
+              hashtable[field] = [];
             }
-            store[field] = [...store[field], firstName];
+            hashtable[field] = [...hashtable[field], firstname];
           }
           students += 1;
         }
       }
-      resolve(store);
+      resolve(hashtable);
     }
   });
 });
