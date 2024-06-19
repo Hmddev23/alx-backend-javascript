@@ -5,28 +5,28 @@ function countStudents(path) {
     throw new Error('Cannot load the database');
   }
 
-  const data = fs.readFileSync(path, 'utf8');
-  const nbr_lines = data.split('\n');
-  const store = {};
+  const hashtable = {};
   let students = -1;
-  for (const line of nbr_lines) {
+  const data = fs.readFileSync(path, 'utf8');
+  const lines = data.split('\n');
+  for (const line of lines) {
     if (line.trim() !== '') {
-      const cols = line.split(',');
-      const field = cols[3];
-      const firstName = cols[0];
+      const columns = line.split(',');
+      const field = columns[3];
+      const firstname = columns[0];
       if (students >= 0) {
-        if (!Object.hasOwnProperty.call(store, field)) {
-          store[field] = [];
+        if (!Object.hasOwnProperty.call(hashtable, field)) {
+          hashtable[field] = [];
         }
-        store[field] = [...store[field], firstName];
+        hashtable[field] = [...hashtable[field], firstname];
       }
       students += 1;
     }
   }
   console.log(`Number of students: ${students}`);
-  for (const key in store) {
-    if (Object.hasOwnProperty.call(store, key)) {
-      console.log(`Number of students in ${key}: ${store[key].length}. List: ${store[key].join(', ')}`);
+  for (const key in hashtable) {
+    if (Object.hasOwnProperty.call(hashtable, key)) {
+      console.log(`Number of students in ${key}: ${hashtable[key].length}. List: ${hashtable[key].join(', ')}`);
     }
   }
 }
